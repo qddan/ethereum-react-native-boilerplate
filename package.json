@@ -135,7 +135,7 @@
     "hooks": {
       "prepare-commit-msg": "exec < /dev/tty && git cz --hook",
       "pre-commit": "",
-      "pre-push": "test"
+      "pre-push": ""
     }
   },
   "lint-staged": {
