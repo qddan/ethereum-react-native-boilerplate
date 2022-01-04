@@ -94,7 +94,7 @@
     "web:deploy": "expo build:web && gh-pages -d web-build"
   },
   "private": true,
-  "name": "moralis-create-react-native-dapp",
+  "name": "dapprn",
   "version": "1.0.0",
   "homepage": "https://cawfree.github.io/create-react-native-dapp",
   "license": "MIT",
@@ -134,7 +134,7 @@
   "husky": {
     "hooks": {
       "prepare-commit-msg": "exec < /dev/tty && git cz --hook",
-      "pre-commit": "lint-staged",
+      "pre-commit": "",
       "pre-push": "test"
     }
   },

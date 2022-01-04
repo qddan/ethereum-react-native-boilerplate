@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   Animated,
   FlatList,
@@ -11,39 +11,39 @@ import {
   Text,
   Modal,
   Pressable,
-} from "react-native";
+} from 'react-native';
 
-import { RenderQrcodeModalProps, WalletService } from "../types";
+import { RenderQrcodeModalProps, WalletService } from '../types';
 
-import Qrcode from "./Qrcode";
-import WalletConnectLogo from "./WalletConnectLogo";
-import WalletServiceRow from "./WalletServiceRow";
+import Qrcode from './Qrcode';
+import WalletConnectLogo from './WalletConnectLogo';
+import WalletServiceRow from './WalletServiceRow';
 
 const styles = StyleSheet.create({
-  absolute: { position: "absolute" },
-  black: { backgroundColor: "black" },
-  white: { backgroundColor: "white" },
+  absolute: { position: 'absolute' },
+  black: { backgroundColor: 'black' },
+  white: { backgroundColor: 'white' },
 
-  center: { alignItems: "center", justifyContent: "center" },
-  border: { borderColor: "black", borderWidth: 10 },
+  center: { alignItems: 'center', justifyContent: 'center' },
+  border: { borderColor: 'black', borderWidth: 10 },
   flex: { flex: 1 },
-  fullWidth: { width: "100%" },
-  halfHeight: { height: "50%" },
-  noOverflow: { overflow: "hidden" },
-  row: { alignItems: "center", flexDirection: "row" },
+  fullWidth: { width: '100%' },
+  halfHeight: { height: '50%' },
+  noOverflow: { overflow: 'hidden' },
+  row: { alignItems: 'center', flexDirection: 'row' },
   centeredView: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 22,
   },
   modalView: {
     margin: 10,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     borderRadius: 20,
     padding: 15,
-    alignItems: "center",
-    shadowColor: "#000",
+    alignItems: 'center',
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -58,23 +58,23 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   buttonOpen: {
-    backgroundColor: "#F194FF",
+    backgroundColor: '#F194FF',
   },
   buttonClose: {
-    backgroundColor: "#2196F3",
+    backgroundColor: '#2196F3',
   },
   textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   modalText: {
     marginBottom: 15,
-    textAlign: "center",
+    textAlign: 'center',
   },
 });
 
-const useNativeDriver = Platform.OS !== "web";
+const useNativeDriver = Platform.OS !== 'web';
 
 export default function QrcodeModal({
   visible,
@@ -86,7 +86,7 @@ export default function QrcodeModal({
 }: RenderQrcodeModalProps & { readonly division: number }): JSX.Element {
   const shouldConnectToWalletService = React.useCallback(
     (walletService: WalletService) => {
-      connectToWalletService(walletService, uri)
+      connectToWalletService(walletService, uri);
     },
     [connectToWalletService, uri]
   );
@@ -107,7 +107,7 @@ export default function QrcodeModal({
 
   const modalHeight = height * 0.4;
   const modalWidth = modalHeight * 0.9;
-  const modalListHeight = height * 0.3;
+  const modalListHeight = height * 0.6;
   const modalListWidth = modalHeight * 0.8;
 
   const shouldAnimate = React.useCallback(
@@ -148,7 +148,7 @@ export default function QrcodeModal({
   }, [shouldAnimate, visible]);
 
   const onPressLogo = React.useCallback(async () => {
-    const url = "https://walletconnect.org/";
+    const url = 'https://walletconnect.org/';
     return (await Linking.canOpenURL(url)) && Linking.openURL(url);
   }, []);
 
@@ -162,21 +162,23 @@ export default function QrcodeModal({
   const renderItem = React.useCallback(
     ({ item, index }): JSX.Element => {
       return (
-        <WalletServiceRow
-          key={`k${index}`}
-          style={{ opacity: icons }}
-          division={division}
-          walletServices={item}
-          width={modalListWidth}
-          height={modalListHeight * 0.25}
-          connectToWalletService={shouldConnectToWalletService}
-        />
+        index === 0 && (
+          <WalletServiceRow
+            key={`k${index}`}
+            style={{ opacity: icons }}
+            division={division}
+            walletServices={item}
+            width={modalListWidth}
+            height={modalListHeight * 0.25}
+            connectToWalletService={shouldConnectToWalletService}
+          />
+        )
       );
     },
     [modalWidth, modalHeight, division, icons, shouldConnectToWalletService]
   );
 
-  const shouldRenderQrcode = Platform.OS === "web";
+  const shouldRenderQrcode = Platform.OS === 'web';
 
   return (
     <Modal
@@ -193,7 +195,8 @@ export default function QrcodeModal({
             styles.noOverflow,
             { width: modalWidth, height: modalHeight },
           ]}
-          pointerEvents={visible ? "box-none" : "none"}>
+          pointerEvents={visible ? 'box-none' : 'none'}
+        >
           {/* <View style={[styles.modalView, styles.noOverflow]}> */}
           {/* <Text style={styles.modalText}>Hello World!</Text> */}
           <Animated.View
@@ -212,21 +215,25 @@ export default function QrcodeModal({
                 // styles.flex,
               ]
             }
-            pointerEvents={visible ? "box-none" : "none"}>
+            pointerEvents={visible ? 'box-none' : 'none'}
+          >
             {/* backdrop */}
 
             <View
               style={[styles.center]}
-              pointerEvents={visible ? "box-none" : "none"}>
+              pointerEvents={visible ? 'box-none' : 'none'}
+            >
               <Animated.View
-                style={{ width: modalListWidth, height: modalHeight * 0.9 }}>
+                style={{ width: modalListWidth, height: modalHeight * 0.9 }}
+              >
                 {shouldRenderQrcode ? (
                   <Animated.View
                     style={[
                       StyleSheet.absoluteFill,
                       styles.center,
                       { opacity: icons, transform: [{ scale: icons }] },
-                    ]}>
+                    ]}
+                  >
                     <Qrcode uri={uri} size={modalListHeight * 0.8} />
                   </Animated.View>
                 ) : (
@@ -270,7 +277,8 @@ export default function QrcodeModal({
         </View>
         <Pressable
           style={[styles.button, styles.buttonClose]}
-          onPress={() => onDismiss()}>
+          onPress={() => onDismiss()}
+        >
           <Text style={styles.textStyle}>Close </Text>
         </Pressable>
       </View>

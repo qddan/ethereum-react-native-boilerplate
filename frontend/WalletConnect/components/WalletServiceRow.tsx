@@ -28,16 +28,27 @@ export default function WalletServiceRow({
   connectToWalletService,
 }: WalletServiceRowProps): JSX.Element {
   return (
-    <Animated.View style={[{ width, height }, styles.row, StyleSheet.flatten(style as ViewStyle)]}>
-      {walletServices.map((walletService: WalletService, i: number) => (
-        <WalletServiceIcon
-          key={`i${i}`}
-          width={width / division}
-          height={height}
-          walletService={walletService}
-          connectToWalletService={connectToWalletService}
-        />
-      ))}
+    <Animated.View
+      style={[
+        { width, height },
+        styles.row,
+        StyleSheet.flatten(style as ViewStyle),
+      ]}
+    >
+      {walletServices.map(
+        (walletService: WalletService, i: number) =>
+          (walletService?.mobile?.native === 'metamask:' ||
+            walletService?.mobile?.native === 'trust:') && (
+            <WalletServiceIcon
+              key={`i${i}`}
+              // width={width / division}
+              width={width / 3}
+              height={height}
+              walletService={walletService}
+              connectToWalletService={connectToWalletService}
+            />
+          )
+      )}
     </Animated.View>
   );
-};
+}
